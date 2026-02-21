@@ -1,48 +1,46 @@
 import streamlit as st
 import random
 
-# Dictionary matching 'Vibes' to Wrestlers
-WRESTLER_DATA = {
-    "The Trash Talker": {
-        "name": "Stone Cold Steve Austin",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg",
-        "keywords": ["trash", "garbage", "bad", "suck", "won", "easy"]
-    },
-    "The Hype Man": {
-        "name": "Macho Man Randy Savage",
-        "image": "https://www.wwe.com/f/all/2016/06/Randy_Savage_pro--e8f3a388909890f5555.jpg",
-        "keywords": ["let's go", "hype", "huge", "snap", "cream"]
-    },
-    "The Arrogant Champ": {
-        "name": "Ric Flair",
-        "image": "https://www.wwe.com/f/all/2017/02/Ric_Flair_pro--f6e2e388909890f5555.jpg",
-        "keywords": ["greatest", "best", "money", "rich", "champion"]
-    }
-}
+# 1. Data for Wrestlers
+WRESTLERS = [
+    {"name": "Stone Cold Steve Austin", "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
+    {"name": "Macho Man Randy Savage", "image": "https://www.wwe.com/f/all/2016/06/Randy_Savage_pro--e8f3a388909890f5555.jpg"},
+    {"name": "Ric Flair", "image": "https://www.wwe.com/f/all/2017/02/Ric_Flair_pro--f6e2e388909890f5555.jpg"},
+    {"name": "The Rock", "image": "https://upload.wikimedia.org/wikipedia/commons/1/11/Dwayne_Johnson_2014_%28cropped%29.jpg"}
+]
 
-st.title("🤼‍♂️ Sleeper Legend Reactions")
-st.write("Paste a comment from your Sleeper offshoot chat below!")
+# 2. Data for NCAAB Teams (Example list)
+NCAAB_TEAMS = [
+    {"name": "Duke Blue Devils", "logo": "https://upload.wikimedia.org/wikipedia/commons/0/04/Duke_Blue_Devils_logo.svg"},
+    {"name": "UNC Tar Heels", "logo": "https://upload.wikimedia.org/wikipedia/commons/d/d7/North_Carolina_Tar_Heels_logo.svg"},
+    {"name": "Kansas Jayhawks", "logo": "https://upload.wikimedia.org/wikipedia/en/9/9e/Kansas_Jayhawks_logo.svg"},
+    {"name": "Kentucky Wildcats", "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Kentucky_Wildcats_logo.svg"}
+]
 
-# User Input
-user_comment = st.text_area("Sleeper Comment:", placeholder="e.g., 'I just fleeced him in that trade!'")
+st.title("🏀 Sleeper X Wrestler X NCAAB")
+st.write("Paste your Sleeper comment to get your random Legend and Team match!")
 
-if st.button("Interpret & Match"):
+user_comment = st.text_area("Sleeper Comment:", placeholder="Paste that trash talk here...")
+
+if st.button("Generate Reaction"):
     if user_comment:
-        # Simple interpretation logic
-        comment_lower = user_comment.lower()
-        matched_wrestler = None
-        
-        for vibe, info in WRESTLER_DATA.items():
-            if any(word in comment_lower for word in info["keywords"]):
-                matched_wrestler = info
-                break
-        
-        # Fallback to a random legend if no keywords found
-        if not matched_wrestler:
-            matched_wrestler = random.choice(list(WRESTLER_DATA.values()))
+        # Pick random items
+        wrestler = random.choice(WRESTLERS)
+        team = random.choice(NCAAB_TEAMS)
 
-        st.subheader(f"Interpretation: {matched_wrestler['name']}")
-        st.image(matched_wrestler["image"], caption=f"Matched because of the '{vibe}' vibe.")
-        st.write(f"**Original Comment:** {user_comment}")
+        st.divider()
+        
+        # Display Results in Columns
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.header(f"Legend: {wrestler['name']}")
+            st.image(wrestler['image'], use_container_width=True)
+            
+        with col2:
+            st.header(f"Team: {team['name']}")
+            st.image(team['logo'], use_container_width=True)
+
+        st.success(f"**The Verdict:** Your comment has the spirit of {wrestler['name']} and the energy of {team['name']}!")
     else:
-        st.warning("Please enter a comment first!")
+        st.warning("Enter a comment first!")
