@@ -26,4 +26,3 @@ def get_msg():
         return None, None
     except:
         return None, None
-    
