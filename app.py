@@ -2,51 +2,55 @@ import streamlit as st
 import random
 import requests
 
-# --- 1. PASTE YOUR DATA HERE ---
-# Paste the link the Console gave you inside these quotes:
-TARGET_URL = "https://sleeper.com/api/v1/channel/1163193122244505600/messages?limit=1"
-# Paste your long authorization string here:
+# --- CONFIGURATION ---
+# Replace with your actual token
 USER_TOKEN = "YOUR_ACTUAL_TOKEN_HERE"
+CHANNEL_ID = "1163193122244505600"
 
-def fetch_last_comment():
-    headers = {
-        "Authorization": USER_TOKEN,
-        "User-Agent": "Mozilla/5.0"
-    }
+def get_sleeper_data():
+    # Using the official api.sleeper.app domain for better stability
+    url = f"https://api.sleeper.app/v1/channel/{CHANNEL_ID}/messages?limit=1"
+    headers = {"Authorization": USER_TOKEN, "User-Agent": "Mozilla/5.0"}
     try:
-        r = requests.get(TARGET_URL, headers=headers)
+        r = requests.get(url, headers=headers)
         if r.status_code == 200:
             data = r.json()
-            if data and len(data) > 0:
-                # Returns the text and the person who said it
+            if data:
                 return data[0]['text'], data[0].get('display_name', 'User')
-        return f"Error {r.status_code}: Access Denied", "System"
+        return None, None
     except:
-        return "Connection failed", "System"
+        return None, None
 
-# --- 2. DATA ---
+# --- STABLE IMAGE LINKS ---
 WRESTLERS = [
-    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
-    {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/1/13/Ric_Flair_July_2016.jpg"}
+    {"n": "Stone Cold", "i": "https://i.imgur.com/3vK9uIu.jpg"},
+    {"n": "Ric Flair", "i": "https://i.imgur.com/WfR2fM0.jpg"},
+    {"n": "Hulk Hogan", "i": "https://i.imgur.com/86D3mC4.jpg"}
 ]
 
 TEAMS = [
-    {"n": "Duke", "l": "https://upload.wikimedia.org/wikipedia/commons/0/04/Duke_Blue_Devils_logo.svg"},
-    {"n": "Kentucky", "l": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Kentucky_Wildcats_logo.svg"}
+    {"n": "Duke", "l": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Duke_Blue_Devils_logo.svg/1200px-Duke_Blue_Devils_logo.svg.png"},
+    {"n": "Kentucky", "l": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kentucky_Wildcats_logo.svg/1200px-Kentucky_Wildcats_logo.svg.png"},
+    {"n": "Kansas", "l": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Kansas_Jayhawks_logo.svg/1200px-Kansas_Jayhawks_logo.svg.png"}
 ]
 
-# --- 3. UI ---
-st.set_page_config(page_title="Sleeper Auto-Match", layout="wide")
-st.title("🏀 Auto-Sleeper Matcher")
+# --- APP UI ---
+st.set_page_config(page_title="Sleeper Matcher", layout="wide")
+st.title("🤼‍♂️ Sleeper Legend Matcher")
 
-if st.button("Get Latest Chat Message"):
-    comment, user = fetch_last_comment()
+# Action Button
+if st.button("Fetch & Match!"):
+    text, user = get_sleeper_data()
     w = random.choice(WRESTLERS)
     t = random.choice(TEAMS)
 
-    st.subheader(f"Message from {user}:")
-    st.info(comment)
-    
+    if text:
+        st.subheader(f"Latest from: {user}")
+        st.info(text)
+    else:
+        st.warning("⚠️ Auto-fetch failed. (Private Channel Security). Showing random match below anyway!")
+
+    # Display Images
     col1, col2 = st.columns(2)
     with col1:
         st.header(w['n'])
@@ -54,3 +58,10 @@ if st.button("Get Latest Chat Message"):
     with col2:
         st.header(t['n'])
         st.image(t['l'], use_container_width=True)
+
+st.divider()
+st.write("If the button above fails, paste the comment here manually:")
+manual_text = st.text_input("Manual Comment Entry")
+if manual_text:
+    st.info(f"Judging: {manual_text}")
+    
