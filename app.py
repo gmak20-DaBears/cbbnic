@@ -17,38 +17,4 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA (Swapped Ric Flair to a more stable link) ---
-WRESTLERS = [
-    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
-    {"n": "Ric Flair", "i": "https://www.wrestling-online.com/news/wp-content/uploads/2017/08/ricflair.jpg"},
-    {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
-]
-
-TEAMS = [
-    {"n": "Duke", "l": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Duke_Blue_Devils_logo.svg/800px-Duke_Blue_Devils_logo.svg.png"},
-    {"n": "Kentucky", "l": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Kentucky_Wildcats_logo.svg/800px-Kentucky_Wildcats_logo.svg.png"},
-    {"n": "Kansas", "l": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Kansas_Jayhawks_logo.svg/800px-Kansas_Jayhawks_logo.svg.png"}
-]
-
-# --- UI ---
-st.set_page_config(page_title="Sleeper Matcher", layout="centered")
-st.title("🤼‍♂️ Sleeper Legend Matcher")
-
-if st.button("Fetch & Match!"):
-    txt, usr = get_msg()
-    w, t = random.choice(WRESTLERS), random.choice(TEAMS)
-    
-    if txt:
-        st.subheader(f"Latest from: {usr}")
-        st.info(txt)
-    else:
-        st.warning("Message fetch failed (Token likely expired).")
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.header(w['n'])
-        st.image(w['i'], use_container_width=True)
-    with col2:
-        st.header(t['n'])
-        st.image(t['l'], use_container_width=True)
-
+# --- DATA (Using direct-access
