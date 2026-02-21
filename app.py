@@ -2,22 +2,25 @@ import streamlit as st
 import random
 import requests
 
-# --- SETTINGS ---
+# --- 1. SETTINGS ---
+# Using your ChiBears84 token
 TK = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI2MTE0MjIwODY2OTQ3NjA0NDgiLCJkaXNwbGF5TmFtZSI6IkNoaUJlYXJzODQiLCJhdmF0YXIiOiJlZTRhM2VmMzY4ZGJlYzc3ZmJhOTA4ZDgxNWZiZDI4NyIsInNsZWVwZXJUb2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpoZG1GMFlYSWlPaUpsWlRSaE0yVm1Nelk0WkdKbFl6YzNabUpoT1RBNFpEZ3hOV1ppWkRJNE55SXNJbVJwYzNCc1lYbGZibUZ0WlNJNklrTm9hVUpsWVhKek9EUWlMQ0psZUhBaU9qRTNPRGt3TVRJNU9UZ3NJbWxoZENJNk1UYzFOelEzTmprNU9Dd2lhWE5mWW05MElqcG1ZV3h6WlN3aWFYTmZiV0Z6ZEdWeUlqcG1ZV3h6WlN3aWNtVmhiRjl1WVcxbElqcHVkV3hzTENKMWMyVnlYMmxrSWpvMk1URTBNakl3T0RZMk9UUTNOakEwTkRnc0luWmhiR2xrWHpKbVlTSTZJbkJvYjI1bEluMC5FOGR3eUVfMGMtUFNoaEcxaWVoUDBwaTRhNUVWU2RFUUtxVG03LUh1a0dVIiwiZW1haWwiOiJnbWFrMjBAeWFob28uY29tIiwidHlwZSI6InNlc3Npb24iLCJpYXQiOjE3NzE2ODAwODcsImV4cCI6MTgwMzIxNjA4NywiaXNzIjoic2xlZXBlci13ZWIiLCJhdWQiOiJzbGVlcGVyLXdlYiJ9.Z6VfZzIZ-NVZFynOieVAhagnNtdhvwADbaYUND7LBbg"
 ID = "1163193122244505600"
 
 def get_msg():
-    u = f"https://api.sleeper.app/v1/channel/{ID}/messages?limit=1"
-    h = {"Authorization": TK, "User-Agent": "Mozilla/5.0"}
+    url = f"https://api.sleeper.app/v1/channel/{ID}/messages?limit=1"
+    headers = {"Authorization": TK, "User-Agent": "Mozilla/5.0"}
     try:
-        r = requests.get(u, headers=h, timeout=5)
+        r = requests.get(url, headers=headers, timeout=5)
         if r.status_code == 200:
             data = r.json()
-            if data: return data[0]['text'], data[0].get('display_name', 'User')
-    except: pass
+            if data:
+                return data[0]['text'], data[0].get('display_name', 'User')
+    except:
+        pass
     return None, None
 
-# --- DATA (Real Images from ESPN & Wikipedia) ---
+# --- 2. DATA (Direct Image Links) ---
 W = [
     {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
     {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/b/be/Ric_Flair_2015.jpg"},
@@ -30,4 +33,25 @@ T = [
     {"n": "Kansas", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png"}
 ]
 
-# ---
+# --- 3. UI ---
+st.set_page_config(page_title="Sleeper Matcher", layout="wide")
+st.title("🤼‍♂️ Sleeper Legend Matcher")
+
+if st.button("Fetch & Match!"):
+    msg, usr = get_msg()
+    w, t = random.choice(W), random.choice(T)
+    
+    if msg:
+        st.subheader(f"Latest from: {usr}")
+        st.info(msg)
+    else:
+        st.warning("Chat fetch failed (Token likely expired). Showing match only:")
+    
+    c1, c2 = st.columns(2)
+    with c1:
+        st.header(w['n'])
+        st.image(w['i'], use_container_width=True)
+    with c2:
+        st.header(t['n'])
+        st.image(t['l'], use_container_width=True)
+        
