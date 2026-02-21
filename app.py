@@ -17,37 +17,13 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA ---
+# --- DATA (Swapped to new public image servers) ---
 W = [
-    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
-    {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/b/be/Ric_Flair_2015.jpg"},
-    {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
+    {"n": "Stone Cold", "i": "https://www.wwe.com/f/styles/wwe_large/public/all/2019/07/Stone_Cold_Steve_Austin_stat--157451478170c9443685324523c95965.jpg"},
+    {"n": "Ric Flair", "i": "https://prowrestlingpost.com/wp-content/uploads/2021/08/Ric-Flair-3.jpg"},
+    {"n": "Hulk Hogan", "i": "https://www.wwe.com/f/styles/gallery_img_l/public/all/2019/10/011_CrownJewel_10312019_Logos--e4b17208159670f80877991b1f868774.jpg"}
 ]
 
 T = [
-    {"n": "Duke", "l": "https://i.imgur.com/vH9v5mX.png"},
-    {"n": "Kentucky", "l": "https://i.imgur.com/pYxV0eK.png"},
-    {"n": "Kansas", "l": "https://i.imgur.com/uG5h1H1.png"}
-]
-
-# --- UI ---
-st.title("🤼‍♂️ Sleeper Matcher")
-
-if st.button("Fetch & Match!"):
-    txt, usr = get_msg()
-    w, t = random.choice(W), random.choice(T)
-    
-    if txt:
-        st.subheader(f"Latest from: {usr}")
-        st.info(txt)
-    else:
-        st.warning("Fetch failed. Token might be old.")
-    
-    c1, c2 = st.columns(2)
-    with c1:
-        st.header(w['n'])
-        st.image(w['i'], use_container_width=True)
-    with c2:
-        st.header(t['n'])
-        st.image(t['l'], use_container_width=True)
-        
+    {"n": "Duke", "l": "https://identity.duke.edu/wp-content/uploads/2021/06/Logo_D-300x300.png"},
+    {"n": "Kentucky", "l": "https://brandcenter.uky
