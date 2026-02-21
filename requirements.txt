@@ -1,2 +1,2 @@
-sofi add to taxes
-add fidelity ira stuff to taxes
+streamlit
+requests
