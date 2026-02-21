@@ -12,26 +12,26 @@ def get_msg():
     try:
         r = requests.get(u, headers=h, timeout=5)
         if r.status_code == 200:
-            d = r.json()
-            if d: return d[0]['text'], d[0].get('display_name', 'User')
+            data = r.json()
+            if data: return data[0]['text'], data[0].get('display_name', 'User')
     except: pass
     return None, None
 
-# --- DATA (Ultra-short links to prevent Syntax Errors) ---
+# --- DATA (Using Direct CDN Links) ---
 W = [
-    {"n": "Stone Cold", "i": "https://tinyurl.com/39wz3pjr"},
-    {"n": "Ric Flair", "i": "https://tinyurl.com/3p3m9z7w"},
-    {"n": "Hulk Hogan", "i": "https://tinyurl.com/mr3v2u67"}
+    {"n": "Stone Cold", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"}, # Placeholder test
+    {"n": "Ric Flair", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"}, # Placeholder test
+    {"n": "Hulk Hogan", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png"} # Placeholder test
 ]
 
 T = [
-    {"n": "Duke", "l": "https://tinyurl.com/4z8p4p8k"},
-    {"n": "Kentucky", "l": "https://tinyurl.com/4v2n4r6v"},
-    {"n": "Kansas", "l": "https://tinyurl.com/2p867u7v"}
+    {"n": "Duke", "l": "https://logo.clearbit.com/duke.edu"},
+    {"n": "Kentucky", "l": "https://logo.clearbit.com/uky.edu"},
+    {"n": "Kansas", "l": "https://logo.clearbit.com/ku.edu"}
 ]
 
 # --- UI ---
-st.title("🤼‍♂️ Sleeper Legend Matcher")
+st.title("🤼‍♂️ Sleeper Matcher")
 
 if st.button("Fetch & Match!"):
     txt, usr = get_msg()
