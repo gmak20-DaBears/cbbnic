@@ -1,31 +1,7 @@
 import streamlit as st
 import random
-import requests
 
-# --- 1. SETTINGS ---
-# Replace the text below with your actual token from the Network tab
-USER_TOKEN = "YOUR_ACTUAL_TOKEN_HERE"
-CHANNEL_ID = "1163193122244505600"
-
-def get_sleeper_data():
-    # This is the direct pipe to your specific chat
-    url = f"https://sleeper.com/api/v1/channel/{CHANNEL_ID}/messages?limit=1"
-    headers = {
-        "Authorization": USER_TOKEN,
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-    }
-    try:
-        r = requests.get(url, headers=headers)
-        if r.status_code == 200:
-            data = r.json()
-            if data:
-                return data[0]['text'], data[0].get('display_name', 'User')
-            return "No messages found.", "System"
-        return f"Error {r.status_code}", "System"
-    except:
-        return "Connection Error", "System"
-
-# --- 2. DATA (Stable Wikipedia Links) ---
+# --- DATA ---
 WRESTLERS = [
     {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
     {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/1/13/Ric_Flair_July_2016.jpg"},
@@ -38,22 +14,27 @@ TEAMS = [
     {"n": "Kansas", "l": "https://upload.wikimedia.org/wikipedia/en/9/9e/Kansas_Jayhawks_logo.svg"}
 ]
 
-# --- 3. THE WEBSITE UI ---
 st.set_page_config(page_title="Sleeper Legend Match", layout="wide")
 st.title("🏀 Sleeper Legend Matcher")
 
-if st.button("Fetch Last Comment & Match!"):
-    text, user = get_sleeper_data()
-    w = random.choice(WRESTLERS)
-    t = random.choice(TEAMS)
+# User Input
+st.write("Since the Sleeper API is private, paste the comment you want to judge below!")
+user_comment = st.text_input("Paste Sleeper Comment:")
 
-    st.subheader(f"Latest from: {user}")
-    st.info(text)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.header(w['n'])
-        st.image(w['i'], use_container_width=True)
-    with col2:
-        st.header(t['n'])
-        st.image(t['l'], use_container_width=True)
+if st.button("Generate Match"):
+    if user_comment:
+        w = random.choice(WRESTLERS)
+        t = random.choice(TEAMS)
+
+        st.success(f"Matching comment: '{user_comment}'")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.header(f"Legend: {w['n']}")
+            st.image(w['i'], use_container_width=True)
+        with col2:
+            st.header(f"Team: {t['n']}")
+            st.image(t['l'], use_container_width=True)
+    else:
+        st.warning("Please enter a comment first!")
+        
