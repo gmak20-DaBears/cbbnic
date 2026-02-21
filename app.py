@@ -17,9 +17,9 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA (Using reliable direct-file links) ---
+# --- DATA ---
 W = [
-    {"n": "Stone Cold", "i": "https://www.wrestling-online.com/news/wp-content/uploads/2021/03/stonecold-1.jpg"},
+    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
     {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/b/be/Ric_Flair_2015.jpg"},
     {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
 ]
@@ -28,7 +28,7 @@ T = [
     {"n": "Duke", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png"},
     {"n": "Kentucky", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png"},
     {"n": "Kansas", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png"}
-)
+]
 
 # --- UI ---
 st.title("🤼‍♂️ Sleeper Matcher")
