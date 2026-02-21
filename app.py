@@ -17,10 +17,10 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA (Using direct Wikimedia/Stable links) ---
+# --- DATA (Swapped Ric Flair to a more stable link) ---
 WRESTLERS = [
     {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
-    {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/1/13/Ric_Flair_July_2016.jpg"},
+    {"n": "Ric Flair", "i": "https://www.wrestling-online.com/news/wp-content/uploads/2017/08/ricflair.jpg"},
     {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
 ]
 
@@ -51,3 +51,4 @@ if st.button("Fetch & Match!"):
     with col2:
         st.header(t['n'])
         st.image(t['l'], use_container_width=True)
+
