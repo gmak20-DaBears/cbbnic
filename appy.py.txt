@@ -1,0 +1,48 @@
+import streamlit as st
+import random
+
+# Dictionary matching 'Vibes' to Wrestlers
+WRESTLER_DATA = {
+    "The Trash Talker": {
+        "name": "Stone Cold Steve Austin",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg",
+        "keywords": ["trash", "garbage", "bad", "suck", "won", "easy"]
+    },
+    "The Hype Man": {
+        "name": "Macho Man Randy Savage",
+        "image": "https://www.wwe.com/f/all/2016/06/Randy_Savage_pro--e8f3a388909890f5555.jpg",
+        "keywords": ["let's go", "hype", "huge", "snap", "cream"]
+    },
+    "The Arrogant Champ": {
+        "name": "Ric Flair",
+        "image": "https://www.wwe.com/f/all/2017/02/Ric_Flair_pro--f6e2e388909890f5555.jpg",
+        "keywords": ["greatest", "best", "money", "rich", "champion"]
+    }
+}
+
+st.title("🤼‍♂️ Sleeper Legend Reactions")
+st.write("Paste a comment from your Sleeper offshoot chat below!")
+
+# User Input
+user_comment = st.text_area("Sleeper Comment:", placeholder="e.g., 'I just fleeced him in that trade!'")
+
+if st.button("Interpret & Match"):
+    if user_comment:
+        # Simple interpretation logic
+        comment_lower = user_comment.lower()
+        matched_wrestler = None
+        
+        for vibe, info in WRESTLER_DATA.items():
+            if any(word in comment_lower for word in info["keywords"]):
+                matched_wrestler = info
+                break
+        
+        # Fallback to a random legend if no keywords found
+        if not matched_wrestler:
+            matched_wrestler = random.choice(list(WRESTLER_DATA.values()))
+
+        st.subheader(f"Interpretation: {matched_wrestler['name']}")
+        st.image(matched_wrestler["image"], caption=f"Matched because of the '{vibe}' vibe.")
+        st.write(f"**Original Comment:** {user_comment}")
+    else:
+        st.warning("Please enter a comment first!")
