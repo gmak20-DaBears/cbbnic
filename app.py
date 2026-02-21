@@ -17,11 +17,11 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA ---
+# --- DATA (Swapped Wrestlers to Open-Access Hosting) ---
 W = [
-    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
-    {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/b/be/Ric_Flair_2015.jpg"},
-    {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
+    {"n": "Stone Cold", "i": "https://i.ibb.co/XfXkMDR/stone-cold.jpg"},
+    {"n": "Ric Flair", "i": "https://i.ibb.co/0Ym7K7z/ric-flair.jpg"},
+    {"n": "Hulk Hogan", "i": "https://i.ibb.co/hR4y5Nn/hulk-hogan.jpg"}
 ]
 
 T = [
