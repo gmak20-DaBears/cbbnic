@@ -17,36 +17,17 @@ def get_msg():
     except: pass
     return None, None
 
-# --- DATA (Using Direct CDN Links) ---
+# --- DATA (Real Images from ESPN & Wikipedia) ---
 W = [
-    {"n": "Stone Cold", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"}, # Placeholder test
-    {"n": "Ric Flair", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"}, # Placeholder test
-    {"n": "Hulk Hogan", "i": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png"} # Placeholder test
+    {"n": "Stone Cold", "i": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Stone_Cold_Steve_Austin.jpg"},
+    {"n": "Ric Flair", "i": "https://upload.wikimedia.org/wikipedia/commons/b/be/Ric_Flair_2015.jpg"},
+    {"n": "Hulk Hogan", "i": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Hulk_Hogan_July_2015.jpg"}
 ]
 
 T = [
-    {"n": "Duke", "l": "https://logo.clearbit.com/duke.edu"},
-    {"n": "Kentucky", "l": "https://logo.clearbit.com/uky.edu"},
-    {"n": "Kansas", "l": "https://logo.clearbit.com/ku.edu"}
+    {"n": "Duke", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png"},
+    {"n": "Kentucky", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/96.png"},
+    {"n": "Kansas", "l": "https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png"}
 ]
 
-# --- UI ---
-st.title("🤼‍♂️ Sleeper Matcher")
-
-if st.button("Fetch & Match!"):
-    txt, usr = get_msg()
-    w, t = random.choice(W), random.choice(T)
-    
-    if txt:
-        st.subheader(f"Latest from: {usr}")
-        st.info(txt)
-    else:
-        st.warning("Fetch failed. Token might be old.")
-    
-    c1, c2 = st.columns(2)
-    with c1:
-        st.header(w['n'])
-        st.image(w['i'], use_container_width=True)
-    with c2:
-        st.header(t['n'])
-        st.image(t['l'], use_container_width=True)
+# ---
